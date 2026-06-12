@@ -1,9 +1,17 @@
 {
-  "name": "google-oauth2",
+  "name": "s4f-medusa-google-oauth",
   "version": "1.0.0",
-  "description": "A starter for Medusa plugins.",
-  "author": "Medusa (https://medusajs.com)",
+  "description": "Google OAuth2 authentication provider plugin for Medusa v2.",
+  "author": "Shop4Fans (https://shop4fans.io)",
   "license": "MIT",
+  "homepage": "https://github.com/SHOP4FANS/s4f-medusa-google-oauth#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SHOP4FANS/s4f-medusa-google-oauth.git"
+  },
+  "bugs": {
+    "url": "https://github.com/SHOP4FANS/s4f-medusa-google-oauth/issues"
+  },
   "files": [
     ".medusa/server"
   ],
