@@ -8,7 +8,7 @@ export default defineMiddlewares({
       matcher: "/custom-auth/admin/users",
       methods: ["POST"],
       middlewares: [
-        authenticate("user", "bearer", {
+        authenticate("user", ["bearer", "session"], {
           allowUnregistered: true,
         }),
         validateCustomAuthProvider

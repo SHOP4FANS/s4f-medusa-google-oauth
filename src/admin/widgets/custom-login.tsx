@@ -42,38 +42,25 @@ const GoogleLogin = () => {
     const token = await sendCallback()
 
     if (typeof token !== "string") {
-      throw new Error();
+      throw new Error()
     }
 
     const decodedToken = decodeToken(token) as { actor_id: string, user_metadata: Record<string, unknown> }
-
     const userExists = decodedToken.actor_id !== ""
 
     if (!userExists) {
-      console.log("Token being sent:", token)
-
-      // Create user
+      // Session cookie is sent automatically by the SDK
       await sdk.client.fetch("/custom-auth/admin/users", {
         method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
         body: {
           email: decodedToken.user_metadata?.email as string,
         },
       })
 
-      const newToken = await sdk.auth.refresh({
-        Authorization: `Bearer ${token}`
-      })
-
-      if (!newToken) {
-        toast.error("Authentication failed")
-        return
-      }
+      // Refresh session so it reflects the newly created actor
+      await sdk.auth.refresh()
     }
 
-    // User is authenticated
     navigate("/orders")
   }
 
