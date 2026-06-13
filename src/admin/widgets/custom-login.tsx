@@ -4,7 +4,7 @@ import { decodeToken } from "react-jwt"
 import { useSearchParams, useNavigate } from "react-router-dom"
 import { useMutation } from "@tanstack/react-query"
 import { sdk } from "../lib/sdk"
-import { useEffect } from "react"
+import { useEffect, useRef } from "react"
 
 // Google auth provider identifier
 const GOOGLE_AUTH_PROVIDER = "google"
@@ -12,6 +12,7 @@ const GOOGLE_AUTH_PROVIDER = "google"
 const GoogleLogin = () => {
   const [searchParams] = useSearchParams()
   const navigate = useNavigate()
+  const callbackProcessed = useRef(false)
   const { mutateAsync, isPending } = useMutation({
     mutationFn: async () => {
       if (isPending) {
@@ -97,8 +98,8 @@ const GoogleLogin = () => {
 
   // Handle the redirection back from Google
   useEffect(() => {
-    // Google returns a "code" query parameter after authentication
-    if (searchParams.get("code")) {
+    if (searchParams.get("code") && !callbackProcessed.current) {
+      callbackProcessed.current = true
       mutateAsync()
     }
   }, [searchParams, mutateAsync])
